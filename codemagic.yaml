@@ -1,9 +1,11 @@
 workflows:
   android-release:
-    name: Simple Android Release Build
+    name: Build APK Release
     max_build_duration: 20
     scripts:
+      - name: Make gradlew executable
+        script: chmod +x ./android/gradlew
       - name: Build APK Release
-        script: ./gradlew assembleRelease
+        script: cd android && ./gradlew assembleRelease
     artifacts:
-      - app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.apk
