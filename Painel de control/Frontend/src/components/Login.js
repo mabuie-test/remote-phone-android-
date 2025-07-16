@@ -10,12 +10,19 @@ export default function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setErr('');  // limpa erro anterior
     try {
-      const { data } = await API.post('/auth/login', { username: user, password: pass });
+      const { data } = await API.post('/auth/login', {
+        username: user.trim(),
+        password: pass
+      });
       localStorage.setItem('token', data.token);
       navigate('/devices');
-    } catch {
-      setErr('Credenciais inválidas');
+    } catch (error) {
+      console.error('Login error:', error);
+      // Tenta ler a msg do backend, senão exibe genérica
+      const serverMsg = error.response?.data?.msg;
+      setErr(serverMsg || 'Erro ao conectar com a API');
     }
   };
 
