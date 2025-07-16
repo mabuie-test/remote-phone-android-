@@ -2,9 +2,6 @@ workflows:
   android-release:
     name: Simple Android Release Build
     max_build_duration: 20
-    environment:
-      vars:
-        JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
     scripts:
       - name: Build APK Release
         script: ./gradlew assembleRelease
