@@ -1,6 +1,4 @@
-# Remote Phone Backend
-
-## Deploy no Render
+## Passos para Deploy no Render
 
 1. Crie serviço Web Service no Render e aponte para este repositório.  
 2. Build Command: `npm install`  
