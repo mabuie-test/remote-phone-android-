@@ -1,27 +1,23 @@
 const router = require('express').Router();
 const User   = require('../models/User');
 const jwt    = require('jsonwebtoken');
-// Removemos temporariamente estes middlewares
-// const auth   = require('../middleware/auth');
-// const roles  = require('../middleware/roles');
+const auth   = require('../middleware/auth');
+const roles  = require('../middleware/roles');
 
-// Registrar (acesso aberto temporariamente)
+// Registrar (só admin)
 router.post(
   '/register',
+  auth,
+  roles(['admin']),
   async (req, res) => {
-    try {
-      const { username, password, role } = req.body;
-      const u = new User({ username, password, role });
-      await u.save();
-      return res.json({ msg: 'User criado' });
-    } catch (err) {
-      console.error('Erro ao criar user:', err);
-      return res.status(500).json({ msg: 'Erro interno' });
-    }
+    const { username, password, role } = req.body;
+    const u = new User({ username, password, role });
+    await u.save();
+    res.json({ msg: 'User criado' });
   }
 );
 
-// Login (mantém-se igual)
+// Login
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const u = await User.findOne({ username });
@@ -36,3 +32,4 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+//retrancado
